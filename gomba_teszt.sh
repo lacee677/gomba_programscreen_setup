@@ -23,6 +23,9 @@ echo "config added to ~/.bash_profile (for X server autostart)"
 sudo timedatectl set-timezone Europe/Budapest
 echo "timezone is now set to Europe/Budapest"
 
+export LANG=es_ES.UTF-8
+echo "language changed to hungarian"
+
 cat /etc/inittab | sed "s/1:2345:respawn:\/sbin\/getty 115200 tty1/#1:2345:respawn:\/sbin\/getty 115200 tty1\n1:2345:respawn:\/bin\/login -f pi tty1 <\/dev\/tty1 >\/dev\/tty1 2>\&1/g" | sudo tee testfile > /dev/null
 echo "autologin enabled"
 
