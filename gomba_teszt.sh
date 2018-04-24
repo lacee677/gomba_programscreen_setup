@@ -26,7 +26,9 @@ echo "timezone is now set to Europe/Budapest"
 export LANG=es_ES.UTF-8
 echo "language changed to hungarian"
 
-cat /etc/inittab | sed "s/1:2345:respawn:\/sbin\/getty 115200 tty1/#1:2345:respawn:\/sbin\/getty 115200 tty1\n1:2345:respawn:\/bin\/login -f pi tty1 <\/dev\/tty1 >\/dev\/tty1 2>\&1/g" | sudo tee testfile > /dev/null
+sudo systemctl set-default multi-user.target
+sudo sed /etc/systemd/system/autologin@.service -i -e "s#^ExecStart=-/sbin/agetty --autologin [^[:space:]]*#ExecStart=-/sbin/agetty --autologin $SUDO_USER#"
+sudo ln -fs /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 echo "autologin enabled"
 
 echo "Network priority will be from first added to last"
