@@ -14,7 +14,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/' ~/.config/chromium/'Local State'
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/; s/\"exit_type\":\"[^\"]\+\"/\"exit_type\":\"Normal\"/' ~/.config/chromium/Default/Preferences
-chromium-browser --disable-cpu --noerrdialogs --incognito --disable-session-crashed-bubble --disable-infobars --disable-translate --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
+chromium-browser --disable-accelerated-2d-canvas --disable-breakpad --disable-infobars --noerrdialogs --disable-gpu --incognito --lang-hu --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
 echo "config added to /etc/xdg/openbox/autostart (for chrome autostart)"
 
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor' | sudo tee /home/pi/.bash_profile > /dev/null
@@ -22,6 +22,9 @@ echo "config added to ~/.bash_profile (for X server autostart)"
 
 sudo timedatectl set-timezone Europe/Budapest
 echo "timezone is now set to Europe/Budapest"
+
+cat /etc/inittab | sed "s/1:2345:respawn:\/sbin\/getty 115200 tty1/#1:2345:respawn:\/sbin\/getty 115200 tty1\n1:2345:respawn:\/bin\/login -f pi tty1 <\/dev\/tty1 >\/dev\/tty1 2>\&1/g" | sudo tee testfile > /dev/null
+echo "autologin enabled"
 
 echo "Network priority will be from first added to last"
 count=1
@@ -52,3 +55,5 @@ fi
 echo "script finished. You can restart the PI now (reboot)"
 
 #https://die-antwort.eu/techblog/2017-12-setup-raspberry-pi-for-kiosk-mode/
+#the --disable-translate, -disable-session-crashed-bubble flags were removed from chromium
+#https://peter.sh/experiments/chromium-command-line-switches/
