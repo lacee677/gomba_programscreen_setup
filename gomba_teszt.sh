@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox chromium-browser
 echo "installed dependencies"
 sudo echo "# Disable any form of screen saver / screen blanking / power management
@@ -13,8 +15,13 @@ sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/' ~/.config/chromium/
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/; s/\"exit_type\":\"[^\"]\+\"/\"exit_type\":\"Normal\"/' ~/.config/chromium/Default/Preferences
 chromium-browser --disable-cpu --noerrdialogs --incognito --disable-session-crashed-bubble --disable-infobars --disable translate --kiosk --kiosk 'https://gombaszog.github.io/programscreen'" >> /etc/xdg/openbox/autostart
 
-echo "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor" >> .bash_profile
-echo "installed config. you can restart the pi now."
+sudo echo "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor" >> /home/pi/.bash_profile
+
+sudo timedatectl set-timezone Europe/Budapest
+echo "timezone is now set to Europe/Budapest"
+
+echo "installed config. You can restart the PI now (sudo reboot)"
+#Old config
 #[Desktop Entry]
 #Encoding=UTF-8
 #Type=Application
@@ -24,6 +31,8 @@ echo "installed config. you can restart the pi now."
 #Name[en_US]=AutoChromium
 #Name=AutoChromium
 
+
+#https://die-antwort.eu/techblog/2017-12-setup-raspberry-pi-for-kiosk-mode/
 # Disable any form of screen saver / screen blanking / power management
 #xset s off
 #xset s noblank
