@@ -14,10 +14,10 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/' ~/.config/chromium/'Local State'
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/; s/\"exit_type\":\"[^\"]\+\"/\"exit_type\":\"Normal\"/' ~/.config/chromium/Default/Preferences
-chromium-browser --disable-cpu --noerrdialogs --incognito --disable-session-crashed-bubble --disable-infobars --disable translate --kiosk --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee -a /etc/xdg/openbox/autostart
+chromium-browser --disable-cpu --noerrdialogs --incognito --disable-session-crashed-bubble --disable-infobars --disable translate --kiosk --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
 echo "config added to /etc/xdg/openbox/autostart (for chrome autostart)"
 
-echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor' | sudo tee -a /home/pi/.bash_profile
+echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor' | sudo tee /home/pi/.bash_profile > /dev/null
 echo "config added to ~/.bash_profile (for X server autostart)"
 
 sudo timedatectl set-timezone Europe/Budapest
@@ -38,7 +38,7 @@ do
 	     psk=\"$passWord\"
 	     priority=$count
 	     id_str=\"$networkName\"
-	 }" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+	 }" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null
 	 echo "Network $networkName added to file"
 	 echo -n "If no more network(s) remaining type done: "
 	 read input
