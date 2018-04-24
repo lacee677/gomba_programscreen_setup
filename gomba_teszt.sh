@@ -1,6 +1,6 @@
-sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
-sudo apt-get install --no-install-recommends chromium-browser
-echo "# Disable any form of screen saver / screen blanking / power management
+sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox chromium-browser
+echo "installed dependencies"
+sudo echo "# Disable any form of screen saver / screen blanking / power management
 xset s off
 xset s noblank
 xset -dpms
@@ -14,7 +14,7 @@ sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/; s/\"exit_type\":\"[
 chromium-browser --disable-cpu --noerrdialogs --incognito --disable-session-crashed-bubble --disable-infobars --disable translate --kiosk --kiosk 'https://gombaszog.github.io/programscreen'" >> /etc/xdg/openbox/autostart
 
 echo "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor" >> .bash_profile
-
+echo "installed config. you can restart the pi now."
 #[Desktop Entry]
 #Encoding=UTF-8
 #Type=Application
