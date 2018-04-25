@@ -23,11 +23,11 @@ echo "config added to ~/.bash_profile (for X server autostart)"
 sudo timedatectl set-timezone Europe/Budapest
 echo "timezone is now set to Europe/Budapest"
 
-local LOCALE="hu_HU.UTF-8"
+LOCALE="hu_HU.UTF-8"
 if ! LOCALE_LINE="$(grep "^$LOCALE " /usr/share/i18n/SUPPORTED)"; then
   return 1
 fi
-local ENCODING="$(echo $LOCALE_LINE | cut -f2 -d " ")"
+ENCODING="$(echo $LOCALE_LINE | cut -f2 -d " ")"
 echo "$LOCALE $ENCODING" | sudo tee /etc/locale.gen > /dev/null
 sudo sed -i "s/^\s*LANG=\S*/LANG=$LOCALE/" /etc/default/locale
 sudo dpkg-reconfigure -f noninteractive locales
