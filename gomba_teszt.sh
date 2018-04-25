@@ -14,7 +14,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/' ~/.config/chromium/'Local State'
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/; s/\"exit_type\":\"[^\"]\+\"/\"exit_type\":\"Normal\"/' ~/.config/chromium/Default/Preferences
-chromium-browser --disable-accelerated-2d-canvas --disable-breakpad --disable-infobars --noerrdialogs --disable-gpu --incognito --lang-hu --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
+chromium-browser --no-first-run --disable-accelerated-2d-canvas --disable-breakpad --disable-infobars --noerrdialogs --disable-gpu --incognito --lang-hu --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
 echo "config added to /etc/xdg/openbox/autostart (for chrome autostart)"
 
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor' | sudo tee /home/pi/.bash_profile > /dev/null
@@ -23,7 +23,14 @@ echo "config added to ~/.bash_profile (for X server autostart)"
 sudo timedatectl set-timezone Europe/Budapest
 echo "timezone is now set to Europe/Budapest"
 
-export LANG=es_ES.UTF-8
+local LOCALE="hu_HU.UTF-8"
+if ! LOCALE_LINE="$(grep "^$LOCALE " /usr/share/i18n/SUPPORTED)"; then
+  return 1
+fi
+local ENCODING="$(echo $LOCALE_LINE | cut -f2 -d " ")"
+echo "$LOCALE $ENCODING" | sudo tee /etc/locale.gen > /dev/null
+sudo sed -i "s/^\s*LANG=\S*/LANG=$LOCALE/" /etc/default/locale
+sudo dpkg-reconfigure -f noninteractive locales
 echo "language changed to hungarian"
 
 sudo systemctl set-default multi-user.target
