@@ -16,7 +16,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/' ~/.config/chromium/'Local State'
 sed -i 's/\"exited_cleanly\":false/\"exited_cleanly\":true/; s/\"exit_type\":\"[^\"]\+\"/\"exit_type\":\"Normal\"/' ~/.config/chromium/Default/Preferences
-chromium-browser --no-first-run --disable-accelerated-2d-canvas --disable-breakpad --disable-infobars --noerrdialogs --disable-gpu --incognito --lang-hu --kiosk 'https://gombaszog.github.io/programscreen'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
+chromium-browser --no-first-run --disable-accelerated-2d-canvas --disable-breakpad --disable-infobars --noerrdialogs --disable-gpu --incognito --lang-hu --kiosk 'https://program.gombaszog.sk/'" | sudo tee /etc/xdg/openbox/autostart > /dev/null
 echo "config added to /etc/xdg/openbox/autostart (for chrome autostart)"
 
 echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor' | sudo tee /home/pi/.bash_profile > /dev/null
